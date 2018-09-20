@@ -28,14 +28,14 @@ class App extends Component {
             list: [item, ...this.state.list]
         });
     }
-
+// the data prop is passing this.state.list into the List functional component and being looped through to be rendered to the dom.
     render() {
         const { list } = this.state;
         return (
             <div className="container">
                 <h1 className="center">To Do App</h1>
                 <AddItem add={this.addItem}/>
-                <List data={list} />
+                <List data = {list} />
             </div>
             );
         }
