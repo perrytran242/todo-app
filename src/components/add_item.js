@@ -1,25 +1,29 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import NavBtn from './nav_btn';
+import config from '../config';
 
 class AddItem extends Component {
     state = {
         title: '',
         details: ''
     }
-    handleAddItem = (e) => {
+
+    handleAddItem = async (e) => {
         e.preventDefault();
+        
+        await axios.post(`${config.API_URL}/todos${config.API_KEY}`, this.state);
 
-        this.props.add(this.state);
-
-        this.setState({
-            title: '',
-            details: '',
-        });
+        this.props.history.push('/');
     }
+
     render() {
         const { title, details } = this.state;
-    
         return (
-            <form onSubmit={this.handleAddItem}>
+            <div>
+                <h1 className="center">Add To Do Item</h1>
+                <NavBtn to="/" text="Back To List" color="purple darken-2"/> 
+                <form onSubmit={this.handleAddItem}>
                 <div className="row">
                     <div className="col s8 offset-s2">
                         <label>Title</label>
@@ -45,7 +49,9 @@ class AddItem extends Component {
                         <button className="btn grey darken-4">Add Item</button>
                     </div>
                 </div>
-            </form>
+             </form>
+            </div>
+            
         )
     }
 }
