@@ -1,10 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default props => {
+    console.log('Item Props:', props.item._id);
     return (
         <li className="collection-item row">
             <div className="col s8">
-                {props.item.title}
+                <Link to={`/item/${props.item._id}`}>
+                    {props.item.title}
+                </Link>
+                
             </div>
             <div className="col-4 right-align">
                 <button onClick={props.delete}className="btn red darken-2">Delete</button>
