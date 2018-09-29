@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default props => {
-    console.log('Item Props:', props.item._id);
     return (
         <li className="collection-item row">
             <div className="col s8">

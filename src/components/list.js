@@ -8,6 +8,12 @@ class List extends Component {
     state = {
         list: [],
         error: '',
+        redirect: false,
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log('Previous Props:', prevProps);
+        console.log('Previous State:', prevState.list);
     }
 
     componentDidMount() {
@@ -60,8 +66,8 @@ class List extends Component {
                     {listElements}
                 </ul>
             </div>
-    
          );
     }
 }
+
 export default List;
