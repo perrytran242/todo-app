@@ -5,10 +5,14 @@ import config from'../config';
 import axios from 'axios';
 
 class List extends Component {
-    state = {
-        list: [],
-        error: '',
-        redirect: false,
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            list: [],
+            error: '',
+            redirect: false,
+        }    
     }
 
     componentDidUpdate(prevProps, prevState) {

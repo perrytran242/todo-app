@@ -51,7 +51,6 @@ class AddItem extends Component {
                 </div>
              </form>
             </div>
-            
         )
     }
 }

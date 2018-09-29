@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import config from '../config';
 import NavBtn from './nav_btn';
-import DeleteButton from './delete_button';
 
 class Details extends Component {
-    state = {
-        item: {},
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            item: {},
+    }
+   
     }
 
     componentDidMount() {
@@ -19,7 +23,7 @@ class Details extends Component {
         try {
             const response = await axios.get(`${config.API_URL}/todos/${itemId+config.API_KEY}`);
             const { todo } = response.data;
-            let currentTimestamp = this.convertTime( parseInt(todo.created));
+            const currentTimestamp = this.convertTime( parseInt(todo.created));
 
             this.setState({
                 item: todo,
@@ -39,14 +43,16 @@ class Details extends Component {
 
     deleteItem = async id => {
         // http://api.reactprototypes.com/todos?idkey=somekey
-        const response = await axios.delete(`${config.API_URL}/todos/${id+config.API_KEY}`);
-        console.log(response);
-        
+        await axios.delete(`${config.API_URL}/todos/${id+config.API_KEY}`);
+
+        this.props.history.push('/');
     }
 
     render() { 
+        console.log('Props:', this.props);
+        console.log('State:', this.state.item._id);
         const { item, timestamp } = this.state;
-        const { details } = item;
+        const { details, _id } = item;
         if (!item) {
             return <h1>LOADING.....</h1>;
         }
@@ -69,7 +75,7 @@ class Details extends Component {
                 <p className="center">{ details }</p>
                 <p className="center">{ timestamp }</p>
                 <div className="center">
-                    <DeleteButton delete={ () => this.deleteItem(this.state.item._id)}/>
+                    <button onClick={() => this.deleteItem(_id)} className="btn red darken-2">delete</button>
                 </div>
             </div>
         )
