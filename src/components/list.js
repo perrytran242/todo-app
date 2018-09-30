@@ -11,13 +11,7 @@ class List extends Component {
         this.state = {
             list: [],
             error: '',
-            redirect: false,
         }    
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        console.log('Previous Props:', prevProps);
-        console.log('Previous State:', prevState.list);
     }
 
     componentDidMount() {

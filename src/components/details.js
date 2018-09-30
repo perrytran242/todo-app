@@ -9,8 +9,11 @@ class Details extends Component {
 
         this.state = {
             item: {},
-    }
-   
+            timestamp: '',
+            timeCompleted: '',
+            taskCompleted: false,
+            completedMessage: '',
+        }
     }
 
     componentDidMount() {
@@ -37,8 +40,25 @@ class Details extends Component {
     }
 
     convertTime(time) {
-        const date = new Date(time).toDateString();
+        const date = new Date(time).toLocaleTimeString();
         return date;
+    }
+
+     async completeTask () {
+        const { itemId } = this.props.match.params;
+
+        const response = await axios.put(`${config.API_URL}/todos/${itemId+config.API_KEY}`);
+            // console.log(response.data.todo.complete);
+        const { complete, completed } = response.data.todo;
+        console.log('Completed:', completed);   
+        const timeCompleted = this.convertTime(parseInt(completed) );
+
+        
+        this.setState({
+            taskCompleted: complete,
+            completedMessage: `Task Completed at ${timeCompleted}`,
+        });
+
     }
 
     deleteItem = async id => {
@@ -49,8 +69,6 @@ class Details extends Component {
     }
 
     render() { 
-        console.log('Props:', this.props);
-        console.log('State:', this.state.item._id);
         const { item, timestamp } = this.state;
         const { details, _id } = item;
         if (!item) {
@@ -73,9 +91,13 @@ class Details extends Component {
                 <h2 className="center">{ item.title }</h2>
                 <h4 className="center"><u>Details</u></h4>
                 <p className="center">{ details }</p>
-                <p className="center">{ timestamp }</p>
+                <p className="center">Date added: { timestamp }</p>
                 <div className="center">
                     <button onClick={() => this.deleteItem(_id)} className="btn red darken-2">delete</button>
+                </div>
+                <div className="center">
+                    <button onClick={() => this.completeTask()} className="btn blue darken-2">Completed</button>     
+                    <p>{this.state.completedMessage}</p>  
                 </div>
             </div>
         )
