@@ -11,6 +11,7 @@ export default props => {
                 
             </div>
             <div className="col-4 right-align">
+                <Link to="/edit-item/:itemId" className="btn yellow darken-2">Edit</Link>
                 <button onClick={props.delete}className="btn red darken-2">Delete</button>
             </div>
         </li>

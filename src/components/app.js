@@ -5,6 +5,7 @@ import AddItem from './add_item';
 import List from './list';
 import Details from './details';
 import NotFound from './not_found';
+import EditItem from './edit';
 
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
                     <Route exact path="/" component ={ List }/>
                     <Route path="/add-item" component = { AddItem }/>
                     <Route path="/item/:itemId" component={ Details }/>
+                    <Route path="/edit-item/:itemId" component= {EditItem}/>
                     <Route component={ NotFound }/>
                 </Switch>
             </div>

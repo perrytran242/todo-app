@@ -10,8 +10,8 @@ class Details extends Component {
         this.state = {
             item: {},
             timestamp: '',
-            timeCompleted: '',
-            taskCompleted: false,
+            completed: new Date().toLocaleTimeString(),
+            complete: true,
             completedMessage: '',
         }
     }
@@ -37,25 +37,26 @@ class Details extends Component {
                 item: {}
             });
         }
-    }
+    }   
 
     convertTime(time) {
         const date = new Date(time).toLocaleTimeString();
         return date;
     }
 
-     async completeTask () {
+     completeTask = async () => {
         const { itemId } = this.props.match.params;
 
-        const response = await axios.put(`${config.API_URL}/todos/${itemId+config.API_KEY}`);
-            // console.log(response.data.todo.complete);
+        // const response = await axios.put(`${config.API_URL}/todos/${itemId+config.API_KEY}`, (response) => {
+        //     console.log(response);
+        // }).then(response);        
+        const response = await axios.put(`${config.API_URL}/todos/${itemId+config.API_KEY}` );
+        console.log(response);
         const { complete, completed } = response.data.todo;
-        console.log('Completed:', completed);   
         const timeCompleted = this.convertTime(parseInt(completed) );
-
+        console.log(response.data.todo);
         
         this.setState({
-            taskCompleted: complete,
             completedMessage: `Task Completed at ${timeCompleted}`,
         });
 
@@ -96,7 +97,7 @@ class Details extends Component {
                     <button onClick={() => this.deleteItem(_id)} className="btn red darken-2">delete</button>
                 </div>
                 <div className="center">
-                    <button onClick={() => this.completeTask()} className="btn blue darken-2">Completed</button>     
+                    <button onClick={this.completeTask} className="btn blue darken-2">Completed</button>     
                     <p>{this.state.completedMessage}</p>  
                 </div>
             </div>
